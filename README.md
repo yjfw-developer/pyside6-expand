@@ -5,7 +5,7 @@
 </div>
 <!-- END NAVIGATION -->
 
-### 英文版
+### English
 
 # PySide6-Expand Usage Guide
 
