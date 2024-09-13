@@ -1,5 +1,6 @@
 from PySide6.QtCore import Signal, QTimer, Qt
 from PySide6.QtGui import QMouseEvent
+from PySide6.QtWidgets import QApplication, QWidget
 
 
 def mouse_signal(widget_cls):
@@ -48,6 +49,7 @@ def mouse_signal(widget_cls):
         self.long_press_timer.start(widget_cls.long_press_threshold)
 
     def mouseReleaseEvent(self, e: QMouseEvent):
+        self.oldMouseReleaseEvent(e)
         self.long_press_timer.stop()
         self.long_press_timer = QTimer()
         if self.long_press_start:
@@ -59,17 +61,13 @@ def mouse_signal(widget_cls):
                 if not self.isDouble:
                     self.left_clicked.emit()
                 self.isDouble = False
-
             QTimer.singleShot(100, lambda: is_clicked())
-            self.oldMouseReleaseEvent(e)
         elif e.button() == Qt.MouseButton.RightButton:
             def is_clicked():
                 if not self.isDouble:
                     self.right_clicked.emit()
                 self.isDouble = False
-
             QTimer.singleShot(100, lambda: is_clicked())
-            self.oldMouseReleaseEvent(e)
 
     def mouseDoubleClickEvent(self, e: QMouseEvent):
         self.isDouble = True
@@ -87,3 +85,19 @@ def mouse_signal(widget_cls):
     setattr(widget_cls, 'mouseReleaseEvent', mouseReleaseEvent)
     setattr(widget_cls, 'mouseDoubleClickEvent', mouseDoubleClickEvent)
     return widget_cls
+
+@mouse_signal
+class CustomWidget(QWidget):
+    def __init__(self):
+        super().__init__()
+if __name__ == '__main__':
+    app = QApplication()
+    widget = CustomWidget()
+    widget.left_clicked.connect(lambda: print("左键点击"))
+    widget.left_double_clicked.connect(lambda: print("左键双击"))
+    widget.left_long_press.connect(lambda :print("左键长按"))
+    widget.right_clicked.connect(lambda: print("右键点击"))
+    widget.right_double_clicked.connect(lambda: print("右键双击"))
+    widget.right_long_press.connect(lambda :print("右键长按"))
+    widget.show()
+    app.exec()

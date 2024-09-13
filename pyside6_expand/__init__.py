@@ -1,0 +1,1 @@
+from pyside6_expand import expand_signal
