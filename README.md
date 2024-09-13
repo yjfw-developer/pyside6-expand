@@ -1,50 +1,77 @@
-# PySide6-Expand
+<!-- BEGIN NAVIGATION -->
+<div align="center">
+  <a href="README.md">English</a> |
+  <a href="README_Zh.md">中文</a>
+</div>
+<!-- END NAVIGATION -->
 
-## 0.安装 
-```
-#安装
+### 英文版
+
+# PySide6-Expand Usage Guide
+
+## 0. Installation
+
+Install PySide6-Expand using pip:
+
+```shell
 pip install pyside6-expand
-
-#使用
-from pyside6_expand.expand_signal import mouse_signal
 ```
 
-## 1.拓展 - - 鼠标信号：
-将`@mouse_signal`修饰在继承`QWidget`的类上，运行时程序会动态将信号覆盖到QWidget上。<br>
-支持的信号有:<br>
-1. left_clicked 左键点击
-2. left_double_clicked 左键双击
-3. left_long_press 左键长按
-4. right_clicked 右键点击
-5. right_double_clicked 右键双击
-6. right_long_press 右键长按<br>
+Then import the required module in your code:
 
-各个信号之间执行不冲突。
-
-注意：<br>
-该修饰器重写了`mouseDoubleClickEvent`,`mousePressEvent`,`mouseReleaseEvent`<br>
-先执行`mousePressEvent`后执行信号 <br>
-先执行`mouseReleaseEvent`后执行信号逻辑<br>
-不能再次重写`mouseDoubleClickEvent` 否则`left_double_clicked`和`right_double_clicked`信号将失效
-###使用例子：
 ```python
 from pyside6_expand.expand_signal import mouse_signal
-from PySide6.QtWidgets import QWidget,QApplication
+```
+
+## 1. Extension - Mouse Signals
+
+Apply the `@mouse_signal` decorator to classes that inherit from `QWidget` to dynamically bind mouse event signals at runtime.
+
+### Supported Signals
+
+- `left_clicked`: Left button click
+- `left_double_clicked`: Left button double click
+- `left_long_press`: Left button long press
+- `right_clicked`: Right button click
+- `right_double_clicked`: Right button double click
+- `right_long_press`: Right button long press
+
+These signals operate independently and do not interfere with each other.
+
+### Notes
+
+- The `@mouse_signal` decorator overrides the methods `mouseDoubleClickEvent`, `mousePressEvent`, and `mouseReleaseEvent`.
+- When handling mouse press events, `mousePressEvent` is called first, followed by the corresponding signal.
+- When handling mouse release events, `mouseReleaseEvent` is called first, followed by the logic of the respective signal.
+- Do not override `mouseDoubleClickEvent` again, otherwise the `left_double_clicked` and `right_double_clicked` signals will fail to work.
+
+### Example Code
+
+```python
+from pyside6_expand.expand_signal import mouse_signal
+from PySide6.QtWidgets import QWidget, QApplication
+
 @mouse_signal
 class CustomWidget(QWidget):
     def __init__(self):
         super().__init__()
+
 if __name__ == '__main__':
-    app = QApplication()
+    app = QApplication([])
     widget = CustomWidget()
-    widget.left_clicked.connect(lambda: print("左键点击"))
-    widget.left_double_clicked.connect(lambda: print("左键双击"))
-    widget.left_long_press.connect(lambda :print("左键长按"))
-    widget.right_clicked.connect(lambda: print("右键点击"))
-    widget.right_double_clicked.connect(lambda: print("右键双击"))
-    widget.right_long_press.connect(lambda :print("右键长按"))
+    
+    # Connect signals to slots
+    widget.left_clicked.connect(lambda: print("Left button clicked"))
+    widget.left_double_clicked.connect(lambda: print("Left button double clicked"))
+    widget.left_long_press.connect(lambda: print("Left button long pressed"))
+    widget.right_clicked.connect(lambda: print("Right button clicked"))
+    widget.right_double_clicked.connect(lambda: print("Right button double clicked"))
+    widget.right_long_press.connect(lambda: print("Right button long pressed"))
+
     widget.show()
     app.exec()
 ```
 
-## 其他功能正在快速拓展中 ~ ~：
+## Additional Features
+
+This project is actively developing new features, so stay tuned for updates.

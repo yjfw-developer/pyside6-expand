@@ -2,7 +2,6 @@ import os
 
 from setuptools import setup, find_packages
 
-# 如果readme文件中有中文，那么这里要指定encoding='utf-8'，否则会出现编码错误
 with open(os.path.join(os.path.dirname(__file__), 'README.md'), encoding='utf-8') as readme:
     README = readme.read()
 setup(
