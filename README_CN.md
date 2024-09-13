@@ -1,7 +1,7 @@
 <!-- BEGIN NAVIGATION -->
 <div align="center">
   <a href="README.md">English</a> |
-  <a href="README_Zh.md">中文</a>
+  <a href="README_CN.md">中文</a>
 </div>
 <!-- END NAVIGATION -->
 
