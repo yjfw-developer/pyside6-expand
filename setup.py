@@ -6,7 +6,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md'), encoding='utf-8'
     README = readme.read()
 setup(
     name="pyside6-expand",
-    version="1.0.1",
+    version="1.0.3",
     author="yjfw",
     author_email="yjfw_developer@163.com",
     description="A expand about pyside6",

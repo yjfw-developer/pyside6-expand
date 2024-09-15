@@ -51,7 +51,7 @@ These signals operate independently and do not interfere with each other.
 from pyside6_expand.expand_signal import mouse_signal
 from PySide6.QtWidgets import QWidget, QApplication
 
-@mouse_signal
+@mouse_signal(long_press_threshold=500)
 class CustomWidget(QWidget):
     def __init__(self):
         super().__init__()
