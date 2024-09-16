@@ -107,3 +107,21 @@ if __name__ == '__main__':
     customWidget.show()
 
     app.exec()
+
+
+
+if __name__ == '__main__':
+    app = QApplication()
+
+
+    @mouse_signal(long_press_threshold=500)
+    class CustomWidget(QWidget):
+        def __init__(self):
+            super().__init__()
+
+
+    customWidget = CustomWidget()
+    customWidget.left_clicked.connect(lambda item: print(item))
+    customWidget.show()
+
+    app.exec()
