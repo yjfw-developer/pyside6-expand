@@ -36,6 +36,12 @@ Apply the `@mouse_signal` decorator to classes that inherit from `QWidget` to dy
 - `right_double_clicked`: Right button double click
 - `right_long_press`: Right button long press
 
+### Signals Arg:
+
+- `arg for the instance of widget`
+- such as `widget.left_clicked.connect(lambda w:print(w))` 
+- `w:<__main__.CustomWidget(0x1f691a60910) at 0x000001F6936C6280>`
+
 These signals operate independently and do not interfere with each other.
 
 ### Notes
@@ -51,7 +57,7 @@ These signals operate independently and do not interfere with each other.
 from pyside6_expand.expand_signal import mouse_signal
 from PySide6.QtWidgets import QWidget, QApplication
 
-@mouse_signal(long_press_threshold=500)
+@mouse_signal(long_press_threshold=500) # or @mouse_signal()
 class CustomWidget(QWidget):
     def __init__(self):
         super().__init__()
@@ -61,12 +67,12 @@ if __name__ == '__main__':
     widget = CustomWidget()
     
     # Connect signals to slots
-    widget.left_clicked.connect(lambda: print("Left button clicked"))
-    widget.left_double_clicked.connect(lambda: print("Left button double clicked"))
-    widget.left_long_press.connect(lambda: print("Left button long pressed"))
-    widget.right_clicked.connect(lambda: print("Right button clicked"))
-    widget.right_double_clicked.connect(lambda: print("Right button double clicked"))
-    widget.right_long_press.connect(lambda: print("Right button long pressed"))
+    widget.left_clicked.connect(lambda item: print("Left button clicked"))
+    widget.left_double_clicked.connect(lambda item: print("Left button double clicked"))
+    widget.left_long_press.connect(lambda item: print("Left button long pressed"))
+    widget.right_clicked.connect(lambda item: print("Right button clicked"))
+    widget.right_double_clicked.connect(lambda item: print("Right button double clicked"))
+    widget.right_long_press.connect(lambda item: print("Right button long pressed"))
 
     widget.show()
     app.exec()
